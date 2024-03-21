@@ -25,7 +25,7 @@
                     <p class="account">Don't have an account? <a href="register.php">Register</a></p>
                 </div>
                     <div class="form-img">
-                        <img src="../images/ccsbackground.jpg" alt="">
+                        <img src="./images/ccsbackground.jpg" alt="">
                     </div>
             </div>
         </div>
