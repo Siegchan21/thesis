@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.text-container {
+    position: absolute;
+    margin-top: 180px;
+    margin-left: 1000px;
+}
+
+h1 {
+    font-size: 60px;
+}
+
+h2 {
+    margin-top: 240px;
+    font-size: 30px;
+    margin-left: -10px;
+}
+
+h2.login-button {
+    display: inline-block;
+    padding: 10px 45px;
+    background-color: #2364A0;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.h3 {
+    position: relative;
+    background-image: url(../images/ccsbackground.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 780px;
+    width: 700px;
+}
+
+.input-box,
+.inputp-box {
+    position: relative;
+    border-bottom: 2px solid #adadad;
+    margin-left: 1000px;
+    margin-top: -450px;
+    border: none;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.inputp-box {
+    margin-top: 50px;
+}
+
+.link {
+    margin-top: 180px;
+    margin-left: 960px;
+}
