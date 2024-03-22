@@ -1,5 +1,5 @@
 <?php
-    include('../connection.php');
+    include('./connection.php');
     
     if (isset($_POST['submit'])) {
         $username = $_POST['username'];
@@ -14,13 +14,13 @@
         
         if($count == 1){  
             if($position == "Admin"){
-                header("Location: ../Admin?id=$id");
+                header("Location: /Thesis Web Dev/index.html?id=$id");
             }
             elseif($position == "Teacher"){
-                header("Location: ../Faculty?id=$id"); 
+                header("Location: /Thesis Web Dev/facultyindex.html?id=$id"); 
             }
             elseif($position == "Student"){
-                header("Location: ../Student?id=$id"); 
+                header("Location: /Thesis Web Dev/studentindex.html?id=$id");
             }
         }
         else{  
