@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Login Page</title>
-    <link rel="stylesheet" href="./styleindex.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/styleindex.css?v=<?php echo time(); ?>">
 </head>
 
 <body>
@@ -25,7 +25,7 @@
                     <p class="account">Don't have an account? <a href="register.php">Register</a></p>
                 </div>
                     <div class="form-img">
-                        <img src="./images/ccsbackground.jpg" alt="">
+                        <img src="../images/ccsbackground.jpg" alt="">
                     </div>
             </div>
         </div>
