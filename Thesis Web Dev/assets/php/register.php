@@ -1,5 +1,5 @@
 <?php 
-    include('../connection.php');
+    include('./connection.php');
 
     $firstname = "";
     $middlename = "";
@@ -44,7 +44,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Register Page</title>
-    <link rel="stylesheet" href="./assets/ccs/stylereg.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/stylereg.css?v=<?php echo time(); ?>">
 </head>
 
 <body>
