@@ -34,9 +34,8 @@ body {
     overflow: hidden;
     transition: all 0.35s ease-in-out;
     background-color: #fafbfe;
-    background-image: url(../images/ccsbackground.jpg); 
+    background-image: url(../images/backgroundccs.jpg); 
     background-size: cover;
-    opacity: 0.5;
 }
 
 #sidebar {
@@ -48,16 +47,6 @@ body {
     display: flex;
     flex-direction: column;
 }
-
-/* .hidden {
-    display: none;
-}
-.show{
-    display: block;
-}
-#sidebar-image{
-    size: 50px;
-} css profile editable*/
 
 #sidebar.expand {
     width: 260px;
@@ -152,4 +141,28 @@ a.sidebar-link:hover {
 #sidebar.expand .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
     transform: rotate(45deg);
     transition: all .2s ease-out;
+}
+
+.semester{
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    font-size: 3vh;
+    font-weight: 900;
+    height: 50px;
+    display: flex;
+    align-items: center; 
+    padding: 2vh;
+    margin-bottom: 5vh;
+}
+
+.subject{
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    font-size: 3vh;
+    font-weight: 900;
+    height: 50px;
+    display: flex;
+    align-items: center; 
+    padding: 2vh;
+    margin-top: 2vh;
 }

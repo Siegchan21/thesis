@@ -34,9 +34,8 @@ body {
     overflow: hidden;
     transition: all 0.35s ease-in-out;
     background-color: #fafbfe;
-    background-image: url(../images/ccsbackground.jpg); 
+    background-image: url(../images/backgroundccs.jpg); 
     background-size: cover;
-    opacity: 0.5;
 }
 
 #sidebar {
