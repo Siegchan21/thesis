@@ -82,14 +82,19 @@
                                     Register
                                 </button>
                                 <br><br>
-                                <a href="index.php">
+                                <button class="btn" onclick="navigateToPage()">
                                     Back to Login
-                                </a>
+                                </button>
                     </form>
                 </div>
                     <div class="form-img">
                         <img src="../images/ccsbackground.jpg" alt="">
                     </div>
+                <script>
+                        function navigateToPage() {
+                        window.location.href = "index.php";
+                        }
+                </script>
             </div>
         </div>
     </div>
