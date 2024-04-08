@@ -5,13 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Generate Schedule</title>
 <link rel="stylesheet" href="assets/css/Generatedesign.css" />
+<link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<style>
+    /* Add custom styles here */
+</style>
 </head>
 <body>
 <div class="container">
-    <div class="left-panel">
-        <h2>Course Schedule</h2>
+    <div class="row justify-content-around mt-5">
+    <div class="col">
         <table id="courseTable">
-            <thead>
+            <thead class="head">
                 <tr>
                     <th>Course</th>
                     <th>Subjects</th>
@@ -20,6 +26,7 @@
                     <th>No. Students</th>
                     <th>S.Y (School Year)</th>
                     <th>Time</th>
+                    <th>Actions</th> <!-- New column for action buttons -->
                 </tr>
             </thead>
             <tbody id="tableBody">
@@ -32,21 +39,66 @@
                     <td contenteditable="true"></td>
                     <td contenteditable="true"></td>
                     <td contenteditable="true"></td>
+                    <td><button class="removeRowButton">Remove</button></td> <!-- Remove row button -->
                 </tr>
-                <!-- You can add more rows as needed -->
             </tbody>
         </table>
+        <button id="addRowButton">Add Row</button>
     </div>
-    <div class="right-panel">
-        <button id="generateButton">Generate</button>
+    <div class="col-md-auto">
+        <div class="flex flex-column align-items-center ">
+        <button class="mb-3" id="generateButton">Generate</button>
         <button id="generateButton" onclick="navigateToPage()">Back</button> 
+        </div>
+    </div>
     </div>
 </div>
 <div class="background-image"></div> <!-- Background image container -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous">
+</script>
 <script>
     function navigateToPage() {
-        window.location.href = "index.html"; // Replace "your-page-url.html" with the actual URL
+        window.location.href = "main.html"; // Replace "your-page-url.html" with the actual URL
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const maxLength = 20;
+        const editableFields = document.querySelectorAll("[contenteditable=true]");
+        const addRowButton = document.getElementById("addRowButton");
+        const tableBody = document.getElementById("tableBody");
+
+        editableFields.forEach(function(field) {
+            field.addEventListener("input", function() {
+                if (this.textContent.length > maxLength) {
+                    this.textContent = this.textContent.slice(0, maxLength);
+                }
+            });
+        });
+
+        addRowButton.addEventListener("click", function() {
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td><button class="removeRowButton">Remove</button></td>
+            `;
+            tableBody.appendChild(newRow);
+        });
+
+        tableBody.addEventListener("click", function(event) {
+            if (event.target.classList.contains("removeRowButton")) {
+                const row = event.target.closest("tr");
+                tableBody.removeChild(row);
+            }
+        });
+    });
 </script>
 </body>
 </html>
