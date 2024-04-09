@@ -174,3 +174,7 @@ a.sidebar-link:hover {
 .form-group textbox{
     background-color: #3b7ddd;
 }
+
+.view-icon {
+    margin-left: 140vh; /* Adjust margin as needed */
+}

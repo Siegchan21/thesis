@@ -166,3 +166,11 @@ a.sidebar-link:hover {
     padding: 2vh;
     margin-top: 2vh;
 }
+
+.view-icon {
+    margin-left: 135vh; /* Adjust margin as needed */
+}
+
+.lni-remove-file{
+    margin-left: 5vh; /* Adjust margin as needed */
+}
