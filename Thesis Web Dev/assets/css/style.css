@@ -171,3 +171,15 @@ a.sidebar-link:hover {
     margin-left: 140vh; /* Adjust margin as needed */
 }
 
+
+/* DROP DOWN  */
+/* Hide the submenu by default */
+.sub-menu {
+    display: none;
+}
+
+/* Show the submenu when the parent is hovered over */
+.sidebar-item.dropdown:hover .sub-menu {
+    display: block;
+}
+
