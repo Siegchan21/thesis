@@ -168,9 +168,6 @@ a.sidebar-link:hover {
 }
 
 .view-icon {
-    margin-left: 135vh; /* Adjust margin as needed */
+    margin-left: 140vh; /* Adjust margin as needed */
 }
 
-.lni-remove-file{
-    margin-left: 5vh; /* Adjust margin as needed */
-}
