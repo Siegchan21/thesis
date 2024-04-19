@@ -80,14 +80,18 @@
                 <table id="courseTable">
                     <thead class="head">
                         <tr>
-                            <th>Rooms</th>
-                            <th>Room Type</th>
+                            <th>Course</th>
+                            <th>Subject</th>
+                            <th>Instructors</th>
+                            <th>Subject Type</th>
                             <th>Actions</th> <!-- New column for action buttons -->
                         </tr>
                     </thead>
                     <tbody id="tableBody">
                         <!-- Table rows will be dynamically added here -->
                         <tr>
+                            <td contenteditable="true"></td>
+                            <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td><button class="removeRowButton"><i class="lni lni-trash-can"></i></button></td> <!-- Remove row button -->
@@ -98,8 +102,8 @@
             </div>
             <div class="col-md-auto">
                 <div class="flex flex-column align-items-center ">
-                <button class="mb-3" id="generateButton">Save</button>
-                <button id="generateButton" onclick="navigateToPage()">Back</button> 
+                <button class="mb-3" id="saveButton">Save</button>
+                <button id="saveButton" onclick="navigateToPage()">Back</button> 
                 </div>
             </div>
             </div>
@@ -156,9 +160,10 @@
         <table id="courseTable2">
             <thead class="head">
                 <tr>
-                    <th>Rooms</th>
-                    <th>Room Type</th>
-                    <th>Actions</th> <!-- New column for action buttons -->
+                    <th>Course</th>
+                    <th>Subject</th>
+                    <th>Instructors</th>
+                    <th>Subject Type</th>
                 </tr>
             </thead>
         </table>
