@@ -21,7 +21,7 @@
         $username = $_POST["username"];
         $password = $_POST["password"];
 
-        $sql = "INSERT INTO accounts (`firstname`, `middlename`, `lastname`, `birthday`, `position`, `admissionNo`, `username`, `password`)
+        $sql = "INSERT INTO tbluser (`firstname`, `middlename`, `lastname`, `birthday`, `position`, `admissionNum`, `username`, `password`)
         VALUES ('$firstname', '$middlename', '$lastname', '$birthday', '$position', '$admissionnumber', '$username', '$password')";
         $result = $conn->query($sql);
 

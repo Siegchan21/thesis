@@ -5,7 +5,7 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        $sql = "SELECT * FROM accounts WHERE `username` = '$username' AND `password` = '$password'";  
+        $sql = "SELECT * FROM tbluser WHERE `username` = '$username' AND `password` = '$password'";  
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
         $count = mysqli_num_rows($result); 
