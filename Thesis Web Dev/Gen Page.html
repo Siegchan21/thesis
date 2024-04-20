@@ -65,7 +65,8 @@
             </div>
         </aside>
         <div class="main pt-5">
-            <div class="container mt-5">
+
+            <div class="container mt-5 d-flex justify-content-around">
                 <table id="editableTable" class="table table-responsive table-bordered border-dark table-hover text-center text-capitalize">
                     <tr>
                         <th>Grade&Sections</th>
@@ -124,30 +125,37 @@
                     </tr>
                     <!--Add necessary rows if needed-->
                 </table>
+
+                <div class="bg-light p-5 m-5 rounded-4 w-25 h-25 dropdown-container2" name = "container2" style="float: right;">
+                    <h3>SCHOOL YEAR:</h3>
+                        <select class="dropdown" id="dropdown1">
+                        <option value="option1">2024-2025</option>
+                        <option value="option2">2025-2026</option>
+                        <option value="option3">2026-2027</option>
+                    </select>
+                    <p></p>
+                    <h3>SEMESTER:</h3>
+                        <select class="dropdown" id="dropdown2">
+                        <option value="option1">1st</option>
+                        <option value="option2">2nd</option>
+                    </select>
+                    <p></p>
+                    <h3>COURSE:</h3>
+                        <select class="dropdown" id="dropdown3">
+                        <option value="option1">BSCS, BSIT, BSIS</option>
+                        <option value="option2">CAFA</option>
+                        <option value="option3">Autobots, Decepticons</option>
+                    </select>
+                    <button id="generateBtn" class="btn btn-primary mb-3 ml-3" style="float:right; margin: 30px; background-color: blue;">Generate</button>
+                </div>
+
             </div>
-            <div class="bg-light p-5 rounded-4 w-25 h-25 dropdown-container2" name = "container2" style="float: right;">
-                <h3>SCHOOL YEAR:</h3>
-                <select class="dropdown" id="dropdown1">
-                  <option value="option1">2024-2025</option>
-                  <option value="option2">2025-2026</option>
-                  <option value="option3">2026-2027</option>
-                </select>
-                <p></p>
-                <h3>SEMESTER:</h3>
-                <select class="dropdown" id="dropdown2">
-                  <option value="option1">1st</option>
-                  <option value="option2">2nd</option>
-                </select>
-                <p></p>
-                <h3>COURSE:</h3>
-                <select class="dropdown" id="dropdown3">
-                  <option value="option1">BSCS, BSIT, BSIS</option>
-                  <option value="option2">CAFA</option>
-                  <option value="option3">Autobots, Decepticons</option>
-                </select>
-              </div>
-              <button id="generateBtn" class="btn btn-primary mb-3 ml-3" style="float:right; margin: 30px; background-color: blue;">Generate</button>
+
+
             </div>
+
+
+
         </div>
     </select>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
