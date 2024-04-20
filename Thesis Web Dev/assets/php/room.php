@@ -213,20 +213,54 @@
 
 <div class="container2">
     <div class="row justify-content-around mt-5">
-    <div class="col">
-        <table id="courseTable2">
-            <thead class="head">
-                <tr>
-                    <th>Course</th>
-                    <th>Rooms</th>
-                    <th>Room Type</th>
-                    <th>Actions</th> <!-- New column for action buttons -->
-                </tr>
-            </thead>
-        </table>
-    </div>
-    </div>
+        <div class="col">
+            <table id="courseTable2">
+                <thead class="head">
+                    <tr>
+                        <th>Course</th>
+                        <th>Room</th>
+                        <th>Room Type</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody2"></tbody>
+            </table>
+        </div>
     </div>
 </div>
+
+
+    <script>
+        // Function to fetch and display data
+async function fetchDataAndDisplay() {
+    try {
+        const response = await fetch('fetchRoom.php');
+        const data = await response.json();
+        const tableBody = document.getElementById('tableBody2');
+
+        // Clear existing table rows
+        tableBody.innerHTML = '';
+
+        // Iterate through data and create table rows
+        data.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.course}</td>
+                <td>${item.room}</td>
+                <td>${item.roomType}</td>
+                <td>
+                <button class="deleteButton" data-id="${item.subjectID}">Delete</button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
+// Call the function to fetch and display data when the page loads
+window.onload = fetchDataAndDisplay;
+    </script>
 </body>
 </html>
