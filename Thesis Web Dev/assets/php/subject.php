@@ -32,7 +32,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="/Thesis Web Dev/Generate Page.html" class="sidebar-link">
+                    <a href="/Thesis Web Dev/Gen Page.html" class="sidebar-link">
                         <i class="lni lni-calendar"></i>
                         <span>Generate</span>
                     </a>
@@ -46,9 +46,8 @@
                     <ul class="sub-menu" aria-labelledby="navbarDropdown">
                         <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="subject.php">Subject</a></li>
                         <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="room.php">Room</a></li>
-                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="/Thesis Web Dev/Faculty.html">Faculty</a></li>
+                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="Faculty.php">Faculty</a></li>
                         <li class="sidebar-link"><a class="dropdown-item sidebar-link text-light" href="sections.php">Sections</a></li>
-                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="/Thesis Web Dev/course.html">Courses</a></li>
                     </ul>
                     </div>
                 </li>
