@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Form</title>
+  <?
+
+    include_once('conn.php');
+    include_once('submit.php');
+
+  ?>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .form-controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
+    }
+    .form-controls-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .form-row {
+      display: flex;
+      gap: 10px;
+    }
+    .remove-btn {
+      align-self: flex-start;
+    }
+  </style>
+</head>
+<body>
+<div id="forms-container" class="form-container">
+    <div class="form-row">
+    <input type="text" class="class-code" placeholder="Class Code">
+    <input type="text" class="class-name" placeholder="Class Name">
+    <div>
+        <label><input type="radio" name="preference" value="AM" checked> AM</label>
+        <label><input type="radio" name="preference" value="PM"> PM</label>
+    </div>
+    <button class="remove-btn" onclick="removeForm(this)">Remove</button>
+    </div>
+</div>
+<div id="form-controls" class="form-controls">
+    <div class="form-controls-column">
+    <button onclick="addForm()">Add Another Form</button>
+    </div>
+    <div class="form-controls-column">
+    <button onclick="submitForms()">Submit</button>
+    </div>
+</div>
+
+  <script>
+
+    let formCount = 0; // Global variable to keep track of the number of forms added
+
+    function addForm() {
+    formCount++; // Increment the form count to generate a unique identifier
+    
+    const formsContainer = document.getElementById('forms-container');
+    const newForm = document.createElement('div');
+    newForm.classList.add('form-row');
+    newForm.innerHTML = `
+        <input type="text" class="class-code class-code-${formCount}" placeholder="Class Code">
+        <input type="text" class="class-name class-name-${formCount}" placeholder="Class Name">
+        <div>
+        <label><input type="radio" name="preference_${formCount}" value="AM" checked> AM</label>
+        <label><input type="radio" name="preference_${formCount}" value="PM"> PM</label>
+        </div>
+        <button class="remove-btn" onclick="removeForm(this)">Remove</button>
+    `;
+    formsContainer.appendChild(newForm);
+    }
+
+    function removeForm(button) {
+      button.parentElement.remove();
+    }
+
+        function submitForms() {
+        const forms = document.querySelectorAll('.form-row');
+        const formData = [];
+
+        forms.forEach(form => {
+            const classCodeInput = form.querySelector('.class-code');
+            const classNameInput = form.querySelector('.class-name');
+            const preferenceInput = form.querySelector('input[type="radio"]:checked');
+
+            // Check if all required inputs are present and not null
+            if (classCodeInput && classNameInput) {
+                const classCode = classCodeInput.value;
+                const className = classNameInput.value;
+                formData.push({ classCode, className });
+            } else {
+                console.error('Error: One or more input elements are missing in a form.');
+            }
+        });
+
+        // Send form data to submit.php
+        fetch('submit.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ formData }) // Ensure formData is wrapped in an object
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Form data submitted successfully');
+            } else {
+                console.error('Failed to submit form data');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    }
+
+  </script>
+</body>
+</html>
