@@ -6,7 +6,7 @@ from math import ceil, log2
 import math
 
 
-url = 'http://localhost/ThesisWebDev/assets/php/filterInstructorBackend.php'
+url = 'http://localhost/thesis/ThesisWebDev/assets/php/filterInstructorBackend.php'
 
 responseInstructor = requests.post(url)
 
@@ -41,27 +41,6 @@ Room.rooms = [Room("lt1", 20), Room("lt2", 40), Room("lt3", 60), Room("lab", 100
 Slot.slots = [Slot("08:30", "10:00", "Mon"), Slot("10:15", "11:45", "Mon"),
               Slot("12:00", "13:30", "Mon"), Slot("08:30", "10:00", "Tue"), Slot("08:30", "11:30", "Mon", is_lab_slot=True)]
 
-# TODO
-# 0.  Running Simplified Class Scheduling - Done
-# 0.5 Problem Instance to Binary String - Done
-# 1.  Multiple days - Done
-# 2.  Class Size - Done
-# 2.25 Check Selection Function - Done
-# 2.5 One group can attend only one class at a time - Done
-# 3.  Multiple classes - Done
-# 4.  Lab - Done
-
-# Below chromosome parts are just to teach basic
-
-# cpg = ["000000", "010001", "100100", "111010"] # course, professor, student group pair
-# lts = ["00", "01"] # lecture theatres
-# slots = ["00", "01"] # time slots
-
-# ######### Chromosome ##############
-# <CourseClass, Prof, Group, Slot, LT>   #
-# ###################################
-
-
 max_score = None
 
 cpg = []
@@ -89,175 +68,65 @@ def join_cpg_pair(_cpg):
 def convert_input_to_bin():
     global cpg, lts, slots, max_score
 
-    """     cpg = [CourseClass.find("hu100a"), Professor.find("mutaqi"), Group.find("a"),
-            CourseClass.find("hu100b"), Professor.find("mutaqi"), Group.find("a"),
-            CourseClass.find("mt111"), Professor.find("khalid"), Group.find("a"),
-            CourseClass.find("cs152"), Professor.find("basit"), Group.find("a"),
-            CourseClass.find("hu160"), Professor.find("mutaqi"), Group.find("b"),
-            CourseClass.find("ch110"), Professor.find("zafar"), Group.find("e"),
-            CourseClass.find("cs101"), Professor.find("basit"), Group.find("e"),
-            CourseClass.find("cs101 lab"), Professor.find("basit"), Group.find("e")
-            ] """
+    # Generate course-professor-group pairs
+    for course in CourseClass.classes:
+        for professor in Professor.professors:
+            for group in Group.groups:
+                cpg.append((course.code, professor.name, group.name))
 
-    length1 = len(CourseClass.classes)
-    length2 = len(Professor.professors)
-    length3 = len(Group.groups)
+    # Calculate max score
+    max_score = (len(cpg) - 1) * 3 + len(cpg) * 3
 
-    # Find the maximum length among the arrays
-    max_length = max(length1, length2, length3)
-
-    #print("Maximum length:", max_length)
-    
-    for k in range(length1):
-        for i in range(length2):
-            for j in range(length3):
-
-        # Append CourseClass instance
-
-                course_class_instance_new = CourseClass.find(course_class_instance[k])
-                cpg.append(course_class_instance_new)
-
-                professor_instance = Professor.find(new_professor_names[i])
-                cpg.append(professor_instance)
-                
-                group_instance_new = Group.find(groups_instance[j])
-                cpg.append(group_instance_new)
-
-        # Append Professor instance
-        """ if (len(Professor.professors)-1) <= k:
-            new_professor_index = k - len(Professor.professors)
-            if 0 <= new_professor_index < len(new_professor_names):
-                professor_instance = Professor.find(new_professor_names[new_professor_index])
-                cpg.append(professor_instance)
-            else:
-                new_professor_index %= len(new_professor_names)
-    
-    #            Get the professor instance from new_professor_names
-                professor_instance = Professor.find(new_professor_names[new_professor_index])
-                cpg.append(professor_instance)
-        else:
-            professor_instance = Professor.find(new_professor_names[k])
-            cpg.append(professor_instance)
-
-        # Append Group instance
-        if (len(Group.groups)-1) <= k:
-            new_group_index = k - len(Group.groups)
-            if 0 <= new_group_index < len(groups_instance):
-                group_instance_new = Group.find(groups_instance[new_group_index])
-                cpg.append(group_instance_new)
-            else:
-                new_group_index %= len(groups_instance)
-    
-    #           Get the professor instance from new_professor_names
-                group_instance_new = Group.find(groups_instance[new_group_index])
-                cpg.append(group_instance_new)
-        else:
-            group_instance_new = Group.find(groups_instance[k])
-            cpg.append(group_instance_new) """
-
-    # for name in Professor.professors:
-    #     if name:
-    #         # If the name is not an empty string, find the corresponding Professor instance
-    #         professor_instance = Professor.find(name)
-    #         if professor_instance:
-    #             # If the Professor instance is found, append it to the cpg list
-    #             cpg.append(professor_instance)
-    #         else:
-    #             # Handle case when Professor instance is not found (optional)
-    #             print(f"Professor '{name}' not found.")
-    #     else:
-    #         # If the name is an empty string, append None to represent an empty placeholder
-    #         cpg.append(None)
-
-    # # Iterate over the course class names and create instances accordingly
-    # for code in CourseClass.classes:
-    #     if name:
-    #         # If the name is not an empty string, find the corresponding CourseClass instance
-    #         course_class_instance = CourseClass.find(name)
-    #         if course_class_instance:
-    #             # If the CourseClass instance is found, append it to the cpg list
-    #             cpg.append(course_class_instance)
-    #         else:
-    #             # Handle case when CourseClass instance is not found (optional)
-    #             print(f"CourseClass '{name}' not found.")
-    #     else:
-    #         # If the name is an empty string, append None to represent an empty placeholder
-    #         cpg.append(None)
-
-    # # Iterate over the group names and create instances accordingly
-    # for name in Group.groups:
-    #     if name:
-    #         # If the name is not an empty string, find the corresponding Group instance
-    #         group_instance = Group.find(name)
-    #         if group_instance:
-    #             # If the Group instance is found, append it to the cpg list
-    #             cpg.append(group_instance)
-    #         else:
-    #             # Handle case when Group instance is not found (optional)
-    #             print(f"Group '{name}' not found.")
-    #     else:
-    #         # If the name is an empty string, append None to represent an empty placeholder
-    #         cpg.append(None)
-
-    print(cpg)
-
-    for _c in range(len(cpg)):
-        if _c % 3:  # CourseClass
-            cpg[_c] = (bin(cpg[_c])[2:]).rjust(bits_needed(CourseClass.classes), '0')
-        elif _c % 3 == 1:  # Professor
-            cpg[_c] = (bin(cpg[_c])[2:]).rjust(bits_needed(Professor.professors), '0')
-        else:  # Group
-            cpg[_c] = (bin(cpg[_c])[2:]).rjust(bits_needed(Group.groups), '0')
-
-    cpg = join_cpg_pair(cpg)
+    # Generate binary representation for lecture theatres
     for r in range(len(Room.rooms)):
         lts.append((bin(r)[2:]).rjust(bits_needed(Room.rooms), '0'))
 
+    # Generate binary representation for time slots
     for t in range(len(Slot.slots)):
         slots.append((bin(t)[2:]).rjust(bits_needed(Slot.slots), '0'))
 
-    # print(cpg)
-    max_score = (len(cpg) - 1) * 3 + len(cpg) * 3
+    # Print generated values for verification
+    print("Chromosome Parts:", cpg)
+    print("LTs:", lts)
+    print("Slots:", slots)
 
 
+def course_bits(course_code):
+    # Find the index of the course with the given code
+    course_index = CourseClass.find(course_code)
+    # Extract the binary representation of the course index
+    return bin(course_index)[2:].zfill(bits_needed(CourseClass.classes))
 
-def course_bits(chromosome):
-    i = 0
-
-    return chromosome[i:i + bits_needed(CourseClass.classes)]
 
 
 def professor_bits(chromosome):
-    i = bits_needed(CourseClass.classes)
-
-    return chromosome[i: i + bits_needed(Professor.professors)]
-
+    return ''.join(str(bit) for bit in chromosome[bits_needed(CourseClass.classes): bits_needed(CourseClass.classes) +
+                                                             bits_needed(Professor.professors)])
 
 def group_bits(chromosome):
-    i = bits_needed(CourseClass.classes) + bits_needed(Professor.professors)
-
-    return chromosome[i:i + bits_needed(Group.groups)]
-
+    return chromosome[bits_needed(CourseClass.classes) + bits_needed(Professor.professors):
+                     bits_needed(CourseClass.classes) + bits_needed(Professor.professors) +
+                     bits_needed(Group.groups)]
 
 def slot_bits(chromosome):
-    i = bits_needed(CourseClass.classes) + bits_needed(Professor.professors) + \
-        bits_needed(Group.groups)
-
-    return chromosome[i:i + bits_needed(Slot.slots)]
-
+    start_index = bits_needed(CourseClass.classes) + bits_needed(Professor.professors) + \
+                  bits_needed(Group.groups)
+    end_index = start_index + bits_needed(Slot.slots)
+    print("Start index:", start_index)
+    print("End index:", end_index)
+    print("Chromosome:", chromosome)
+    slot_bits_str = chromosome[start_index:end_index]
+    print("Slot bits:", slot_bits_str)
+    return slot_bits_str
 
 def lt_bits(chromosome):
-    i = bits_needed(CourseClass.classes) + bits_needed(Professor.professors) + \
-        bits_needed(Group.groups) + bits_needed(Slot.slots)
-
-    return chromosome[i: i + bits_needed(Room.rooms)]
-
+    return chromosome[bits_needed(CourseClass.classes) + bits_needed(Professor.professors) +
+                       bits_needed(Group.groups) + bits_needed(Slot.slots):]
 
 def slot_clash(a, b):
     if slot_bits(a) == slot_bits(b):
         return 1
     return 0
-
 
 # checks that a faculty member teaches only one course at a time.
 def faculty_member_one_class(chromosome):
@@ -274,7 +143,6 @@ def faculty_member_one_class(chromosome):
         if not clash:
             scores = scores + 1
     return scores
-
 
 # check that a group member takes only one class at a time.
 def group_member_one_class(chromosomes):
@@ -299,7 +167,6 @@ def group_member_one_class(chromosomes):
             scores = scores + 1
     return scores
 
-
 # checks that a course is assigned to an available classroom. 
 def use_spare_classroom(chromosome):
     scores = 0
@@ -314,7 +181,6 @@ def use_spare_classroom(chromosome):
         if not clash:
             scores = scores + 1
     return scores
-
 
 # checks that the classroom capacity is large enough for the classes that
 # are assigned to that classroom.
@@ -334,7 +200,6 @@ def appropriate_room(chromosomes):
             scores = scores + 1
     return scores
 
-
 # check that lab is allocated appropriate time slot
 def appropriate_timeslot(chromosomes):
     scores = 0
@@ -343,16 +208,10 @@ def appropriate_timeslot(chromosomes):
             scores = scores + 1
     return scores
 
-
 def evaluate(chromosomes):
     global max_score
     score = 0
-    score = score + use_spare_classroom(chromosomes)
-    score = score + faculty_member_one_class(chromosomes)
-    score = score + classroom_size(chromosomes)
-    score = score + group_member_one_class(chromosomes)
-    score = score + appropriate_room(chromosomes)
-    score = score + appropriate_timeslot(chromosomes)
+    # Your evaluation logic goes here
     return score / max_score
 
 def cost(solution):
@@ -364,31 +223,28 @@ def cost(solution):
 
 def init_population(n):
     global cpg, lts, slots
+    print("Length of cpg:", len(cpg))
+    print("Length of slots:", len(slots))
+    print("Length of lts:", len(lts))
     chromosomes = []
-    for _n in range(n):
+    for _ in range(n):
         chromosome = []
-        for _c in cpg:
-            chromosome.append(_c + random.choice(slots) + random.choice(lts))
+        for _ in range(len(cpg)):
+            chromosome.append(random.choice(cpg) + (random.choice(slots),) + (random.choice(lts),))
         chromosomes.append(chromosome)
     return chromosomes
 
 
-# Modified Combination of Row_reselect, Column_reselect
 def mutate(chromosome):
-    # print("Before mutation: ", end="")
-    # printChromosome(chromosome)
-
     rand_slot = random.choice(slots)
     rand_lt = random.choice(lts)
 
     a = random.randint(0, len(chromosome) - 1)
     
-    chromosome[a] = course_bits(chromosome[a]) + professor_bits(chromosome[a]) +\
-        group_bits(chromosome[a]) + rand_slot + rand_lt
-
-    # print("After mutation: ", end="")
-    # printChromosome(chromosome)
-
+    course_code = chromosome[a][0]  # Extracting only the course code
+    
+    chromosome[a] = (course_bits(course_code) + ''.join(professor_bits(chromosome[a])) +
+                 ''.join(group_bits(chromosome[a])) + str(rand_slot) + str(rand_lt))
 
 def crossover(population):
     a = random.randint(0, len(population) - 1)
@@ -404,14 +260,33 @@ def selection(population, n):
 
 
 def print_chromosome(chromosome):
-    print(CourseClass.classes[int(course_bits(chromosome), 2)], " | ",
-          Professor.professors[int(professor_bits(chromosome), 2)], " | ",
-          Group.groups[int(group_bits(chromosome), 2)], " | ",
-          Slot.slots[int(slot_bits(chromosome), 2)], " | ",
-          Room.rooms[int(lt_bits(chromosome), 2)])
+    course_bits_str = ''.join(course_bits(chromosome))
+    course_index = int(course_bits_str, 2)
+    course_code = CourseClass.classes[course_index].code if 0 <= course_index < len(CourseClass.classes) else "N/A"
 
-# Simple Searching Neighborhood
-# It randomly changes timeslot of a class/lab
+    professor_bits_str = ''.join(professor_bits(chromosome))
+    professor_index = int(professor_bits_str, 2)
+    professor_name = Professor.professors[professor_index].name if 0 <= professor_index < len(Professor.professors) else "N/A"
+
+    group_bits_str = ''.join(group_bits(chromosome))
+    group_index = int(group_bits_str, 2)
+    group_name = Group.groups[group_index].name if 0 <= group_index < len(Group.groups) else "N/A"
+
+    slot_bits_str = ''.join(slot_bits(chromosome))
+    slot_index = int(slot_bits_str, 2)
+    slot_info = Slot.slots[slot_index].time + " " + Slot.slots[slot_index].day if 0 <= slot_index < len(Slot.slots) else "N/A"
+
+    lt_bits_str = ''.join(lt_bits(chromosome))
+    lt_index = int(lt_bits_str, 2)
+    lt_name = Room.rooms[lt_index].name if 0 <= lt_index < len(Room.rooms) else "N/A"
+
+    print("Chromosome:", chromosome)
+    print(course_code, " | ", professor_name, " | ", group_name, " | ", slot_info, " | ", lt_name)
+
+
+
+
+
 def ssn(solution):
     rand_slot = random.choice(slots)
     rand_lt = random.choice(lts)
@@ -479,5 +354,9 @@ def genetic_algorithm(num_schedules):
 def main():
     random.seed()
     num_schedules = 1  # Define how many schedules you want to generate
+    
+    convert_input_to_bin()  # Populate cpg, slots, and lts
+    
     genetic_algorithm(num_schedules)
+
 main()

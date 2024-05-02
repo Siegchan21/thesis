@@ -71,13 +71,12 @@ class Room:
 
 
 class Slot:
-    slots = None
-
-    def __init__(self, start, end, day, is_lab_slot=False):
-        self.start = start
-        self.end = end
+    def __init__(self, start_time, end_time, day, is_lab_slot=False):
+        self.start_time = start_time
+        self.end_time = end_time
         self.day = day
         self.is_lab_slot = is_lab_slot
 
     def __repr__(self):
-        return "Slot: " + self.start + "-" + self.end + " Day: " + self.day
+        return f"Slot({self.start_time}, {self.end_time}, {self.day}, {self.is_lab_slot})"
+
