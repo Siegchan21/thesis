@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div class="wrapper">
+     <div class="wrapper">
         <aside id="sidebar">
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
@@ -31,34 +31,40 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="Generate Page.html" class="sidebar-link">
+                    <a href="Gen Page.html" class="sidebar-link">
                         <i class="lni lni-calendar"></i>
                         <span>Generate</span>
                     </a>
                 </li>
                 <li class="sidebar-item dropdown">
-                    <a class="sidebar-link dropdown-toggle" href="#" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
                         <i class="lni lni-graph"></i>
                         <span>Schedule</span>
                     </a>
-                    <div class="sub-menu">
-                    <ul class="sub-menu" aria-labelledby="navbarDropdown">
-                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="#">Subject</a></li>
-                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="#">Room</a></li>
-                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="#">Professors</a></li>
-                        <li class="sidebar-link"><a class="dropdown-item sidebar-link text-light" href="#">Sections</a></li>
+                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="assets/php/subject.php" class="sidebar-link">Subject</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="assets/php/room.php" class="sidebar-link">Room</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="assets/php/faculty.php" class="sidebar-link">Faculty</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="assets/php/sections.php" class="sidebar-link">Section</a>
+                        </li>
                     </ul>
-                    </div>
                 </li>
                 <li class="sidebar-item">
-                    <a href="Request.html" class="sidebar-link">
+                    <a class="sidebar-link" href="Request.html">
                         <i class="lni lni-cog"></i>
                         <span>Request</span>
                     </a>
                 </li>
             </ul>
             <div class="sidebar-footer">
-                <a href="../Login&Register/loginindex.html" class="sidebar-link">
+                <a href="assets/php/index.php" class="sidebar-link">
                     <i class="lni lni-exit"></i>
                     <span>Logout</span>
                 </a>

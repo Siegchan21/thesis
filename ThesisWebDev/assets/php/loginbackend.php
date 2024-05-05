@@ -14,13 +14,13 @@
         
         if($count == 1){  
             if($position == "Admin"){
-                header("Location: /Thesis Web Dev/main.html");
+                header("Location: /ThesisWebDev/main.html");
             }
             elseif($position == "Teacher"){
-                header("Location: /Thesis Web Dev/facultyindex.html"); 
+                header("Location: /ThesisWebDev/facultyindex.html"); 
             }
             elseif($position == "Student"){
-                header("Location: /Thesis Web Dev/studentindex.html");
+                header("Location: /ThesisWebDev/studentindex.html");
             }
         }
         else{  
