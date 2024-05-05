@@ -9,7 +9,7 @@
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
@@ -25,33 +25,39 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="main.html" class="sidebar-link">
+                    <a href="../../main.html" class="sidebar-link">
                         <i class="lni lni-dashboard"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="Gen Page.html" class="sidebar-link">
+                    <a href="genPage.php" class="sidebar-link">
                         <i class="lni lni-calendar"></i>
                         <span>Generate</span>
                     </a>
                 </li>
                 <li class="sidebar-item dropdown">
-                    <a class="sidebar-link dropdown-toggle" href="#" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
                         <i class="lni lni-graph"></i>
                         <span>Schedule</span>
                     </a>
-                    <div class="sub-menu">
-                    <ul class="sub-menu" aria-labelledby="navbarDropdown">
-                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="assets/php/subject.php">Subject</a></li>
-                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="assets/php/room.php">Room</a></li>
-                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="faculty.php">Faculty</a></li>
-                        <li class="sidebar-link"><a class="dropdown-item sidebar-link text-light" href="assets/php/sections.php">Sections</a></li>
+                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="subject.php" class="sidebar-link">Subject</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="room.php" class="sidebar-link">Room</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="faculty.php" class="sidebar-link">Faculty</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="sections.php" class="sidebar-link">Sections</a>
+                        </li>
                     </ul>
-                    </div>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="Request.html">
+                    <a class="sidebar-link" href="../../Request.html">
                         <i class="lni lni-cog"></i>
                         <span>Request</span>
                     </a>
@@ -120,7 +126,7 @@
                             <option value="Auto">AUTOMOTIVE</option>
                             <!-- Add more options as needed -->
                         </select>
-                    
+
                     <!-- Container to display filtered data -->
                     <div id="filteredDataContainer"></div>
                     <button id="generateBtn" class="btn btn-primary mb-1 ml-3" style="float:right; margin: 60px; background-color: blue;">Generate</button>
@@ -176,7 +182,7 @@ async function fetchDataAndDisplay() {
         }
 
         // Fetch sections data
-        const responseSections = await fetch(`./assets/php/filterSection.php?courseID=${courseID}`);
+        const responseSections = await fetch(`filterSection.php?courseID=${courseID}`);
         const sections = await responseSections.json();
         const tableBody1 = document.getElementById('tableBody1');
         // Clear existing table rows
@@ -184,12 +190,12 @@ async function fetchDataAndDisplay() {
         // Populate table with sections data
         sections.forEach(section => {
             const row = document.createElement('tr');
-            row.innerHTML = `<td>${section.courseName} - ${section.sectionName}</td>`;
+            row.innerHTML = `<td>${section.sectionName}</td>`;
             tableBody1.appendChild(row);
         });
 
         // Fetch subjects data
-        const responseSubjects = await fetch(`./assets/php/filterSubject.php?courseID=${courseID}`);
+        const responseSubjects = await fetch(`filterSubject.php?courseID=${courseID}`);
         const subjects = await responseSubjects.json();
         const tableBody2 = document.getElementById('tableBody2');
         // Clear existing table rows
@@ -202,7 +208,7 @@ async function fetchDataAndDisplay() {
         });
 
         // Fetch rooms data
-        const responseRooms = await fetch(`./assets/php/filterRoom.php?courseID=${courseID}`);
+        const responseRooms = await fetch(`filterRoom.php?courseID=${courseID}`);
         const rooms = await responseRooms.json();
         const tableBody3 = document.getElementById('tableBody3');
         // Clear existing table rows
@@ -215,7 +221,7 @@ async function fetchDataAndDisplay() {
         });
 
         // Fetch instructors data
-        const responseInstructors = await fetch(`./assets/php/filterInstructor.php?courseID=${courseID}`);
+        const responseInstructors = await fetch(`filterInstructor.php?courseID=${courseID}`);
         const instructors = await responseInstructors.json();
         const tableBody4 = document.getElementById('tableBody4');
         // Clear existing table rows
