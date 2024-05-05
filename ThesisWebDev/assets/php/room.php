@@ -31,7 +31,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="/ThesisWebDev/Gen Page.html" class="sidebar-link">
+                    <a href="genPage.php" class="sidebar-link">
                         <i class="lni lni-calendar"></i>
                         <span>Generate</span>
                     </a>
@@ -43,16 +43,16 @@
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="assets/php/subject.php" class="sidebar-link">Subject</a>
+                            <a href="subject.php" class="sidebar-link">Subject</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="assets/php/room.php" class="sidebar-link">Room</a>
+                            <a href="room.php" class="sidebar-link">Room</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="assets/php/faculty.php" class="sidebar-link">Faculty</a>
+                            <a href="faculty.php" class="sidebar-link">Faculty</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="assets/php/sections.php" class="sidebar-link">Sections</a>
+                            <a href="sections.php" class="sidebar-link">Sections</a>
                         </li>
                     </ul>
                 </li>
