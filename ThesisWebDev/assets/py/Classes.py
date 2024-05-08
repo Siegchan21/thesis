@@ -76,7 +76,3 @@ class Slot:
         self.end_time = end_time
         self.day = day
         self.is_lab_slot = is_lab_slot
-
-    def __repr__(self):
-        return f"Slot({self.start_time}, {self.end_time}, {self.day}, {self.is_lab_slot})"
-

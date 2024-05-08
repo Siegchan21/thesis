@@ -26,46 +26,40 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="/ThesisWebDev/main.html" class="sidebar-link">
+                    <a href="/Thesis Web Dev/main.html" class="sidebar-link">
                         <i class="lni lni-dashboard"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="genPage.php" class="sidebar-link">
+                    <a href="/Thesis Web Dev/Gen Page.html" class="sidebar-link">
                         <i class="lni lni-calendar"></i>
                         <span>Generate</span>
                     </a>
                 </li>
                 <li class="sidebar-item dropdown">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                    <a class="sidebar-link dropdown-toggle" href="#" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="lni lni-graph"></i>
                         <span>Schedule</span>
                     </a>
-                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="subject.php" class="sidebar-link">Subject</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="room.php" class="sidebar-link">Room</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="faculty.php" class="sidebar-link">Faculty</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="sections.php" class="sidebar-link">Sections</a>
-                        </li>
+                    <div class="sub-menu">
+                    <ul class="sub-menu" aria-labelledby="navbarDropdown">
+                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="subject.php">Subject</a></li>
+                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="room.php">Room</a></li>
+                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="Faculty.php">Faculty</a></li>
+                        <li class="sidebar-link"><a class="dropdown-item sidebar-link text-light" href="sections.php">Sections</a></li>
                     </ul>
+                    </div>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="/ThesisWebDev/Request.html">
+                    <a class="sidebar-link" href="/Thesis Web Dev/Request.html">
                         <i class="lni lni-cog"></i>
                         <span>Request</span>
                     </a>
                 </li>
             </ul>
             <div class="sidebar-footer">
-                <a href="assets/php/index.php" class="sidebar-link">
+                <a href="index.php" class="sidebar-link">
                     <i class="lni lni-exit"></i>
                     <span>Logout</span>
                 </a>
@@ -80,6 +74,7 @@
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
             crossorigin="anonymous">
             </script>
+            
 
 <!-- This line checks if the table is empty before saving it into the database -->
 <script>
@@ -113,6 +108,8 @@
                             <th>Course</th>
                             <th>Subject</th>
                             <th>Subject Type</th>
+                            <th>Year Level</th>
+                            <th>Semester</th>
                             <th>Instructor</th>
                             <th>Actions</th> <!-- New column for action buttons -->
                         </tr>
@@ -134,6 +131,13 @@
                                     <!-- Add more options as needed -->
                                 </select>
                             </td>
+                            <td>
+                                <select name="gradeLevel[]">
+                                    <!-- PHP code to populate the dropdown -->
+                                    <?php include("retrieveLevel.php"); ?>
+                                </select>
+                            </td>
+                            <td><input type="text" name="subjectSem[]" placeholder="Semester"></td>
                             <td>
                                 <select name="instructorName[]">
                                     <!-- PHP code to populate the dropdown -->
@@ -201,26 +205,30 @@
                 newRow.innerHTML = `
                 <td>
                     <select name="courseName[]">
-                    <!-- PHP code to populate the dropdown -->
-                    <?php include("retrieveCourse.php"); ?>
+                        <?php include("retrieveCourse.php"); ?>
                     </select>
                 </td>
                 <td><input type="text" name="subjectName[]" placeholder="Enter Subject Name"></td>
                 <td>
                     <select name="subjectType[]">
-                    <option value="LEC">LEC</option>
-                    <option value="LAB">LAB</option>
-                    <!-- Add more options as needed -->
+                        <option value="LEC">LEC</option>
+                        <option value="LAB">LAB</option>
                     </select>
                 </td>
                 <td>
-                    <select name="instructorName[]">
+                    <select name="gradeLevel[]">
                     <!-- PHP code to populate the dropdown -->
+                    <?php include("retrieveLevel.php"); ?>
+                    </select>
+                </td>
+                <td><input type="text" name="subjectSem[]" placeholder="Semester"></td>
+                <td>
+                    <select name="instructorName[]">
                         <?php include("retrieveFaculty.php"); ?>
                     </select>
                 </td>
                 <td><button class="removeRowButton" onclick="deleteRow(this)"><i class="lni lni-trash-can"></i></button></td> <!-- Remove row button -->
-                    `;
+                `;
                 tableBody.appendChild(newRow);
             });
     
@@ -239,11 +247,13 @@
             <table id="courseTable2">
                 <thead class="head">
                     <tr>
-                        <th>Course</th>
+                    <th>Course</th>
                         <th>Subject</th>
-                        <th>Instructor</th>
                         <th>Subject Type</th>
-                        <th>Actions</th>
+                        <th>Year Level</th>
+                        <th>Semester</th>
+                        <th>Instructor</th>
+                        <th>Actions</th> 
                     </tr>
                 </thead>
                 <tbody id="tableBody2"></tbody>
@@ -272,6 +282,8 @@ async function fetchDataAndDisplay() {
                 <td>${item.subject}</td>
                 <td>${item.instructor}</td>
                 <td>${item.subjectType}</td>
+                <td>${item.level}</td>
+                <td>${item.semester}</td>
                 <td>
                 <button class="deleteButton" data-id="${item.subjectID}">Delete</button>
                 </td>

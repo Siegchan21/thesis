@@ -2,20 +2,17 @@
 // Include database connection code
 include('connection.php');
 
-// Get the subject name from the request parameters
-$subjectName = $_GET['courseName']; // Assuming the subject name is sent as a GET parameter
+// Get the courseID from the request parameters
+$courseID = 5;
 
 // Initialize array to store fetched instructor names
 $instructors = array();
 
-// Prepare and execute SQL query to fetch instructor names based on the subject name
-$sql_instructors = "SELECT i.instructorName 
-                    FROM tblinstructors AS i
-                    INNER JOIN tblsubjects AS s ON i.instructorID = s.instructorID
-                    WHERE s.subjectName = ?";
+// Prepare and execute SQL query to fetch instructor names based on the courseID
+$sql_instructors = "SELECT instructorName FROM tblinstructors WHERE courseID = ?";
 $stmt_instructors = $conn->prepare($sql_instructors);
 if ($stmt_instructors) {
-    $stmt_instructors->bind_param('s', $subjectName); // Assuming the subject name is a string
+    $stmt_instructors->bind_param('i', $courseID);
     $stmt_instructors->execute();
     $result_instructors = $stmt_instructors->get_result();
 

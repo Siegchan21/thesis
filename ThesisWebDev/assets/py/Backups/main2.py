@@ -80,24 +80,14 @@ class Room:
 class Slot:
     slots = None
 
-    @classmethod
-    def populate_slots(cls):
-        cls.slots = []
+    def __init__(self, start, end, day, is_lab_slot=False):
+        self.start = start
+        self.end = end
+        self.day = day
+        self.is_lab_slot = is_lab_slot
 
-        # Define time slots
-        time_slots = [
-            "07:00-08:30", "08:30-10:00", "10:00-11:30",
-            "13:00-14:30", "14:30-16:00", "16:00-17:30"
-            # Add more time slots if needed
-        ]
-
-        # Define days
-        days = ["Tue", "Wed", "Thu", "Fri"]
-
-        # Generate time slots for each day
-        for day in days:
-            for time_slot in time_slots:
-                cls.slots.append(f"{time_slot} {day}")
+    def __repr__(self):
+        return f"Slot: {self.start}-{self.end} Day: {self.day}"
 
 def fetch_data_from_url(urls):
     response = requests.get(urls)
@@ -205,8 +195,6 @@ def convert_input_to_bin():
         groups = [Group(name) for name in group_data]
         Group.groups = groups
 
-        Slot.populate_slots()
-
         # Assuming course_data is a list of course names
         if isinstance(course_data, list):
             for course_name in course_data:
@@ -262,6 +250,7 @@ def convert_input_to_bin():
 
         # Calculate max_score based on the lengths of cpg, lts, and slots
         max_score = len(cpg) * len(lts) * len(slots)
+        print(Slot.slots)
 
         return cpg, lts, slots, max_score  # Return all necessary data
     except Exception as e:
@@ -287,6 +276,7 @@ def slot_bits(chromosome):
     i = bits_needed(CourseClass.classes) + bits_needed(Professor.professors) + \
         bits_needed(Group.groups) + bits_needed(Slot.slots)
     return chromosome[i:i + bits_needed(Slot.slots)]
+
 
 def lt_bits(chromosome):
     i = bits_needed(CourseClass.classes) + bits_needed(Professor.professors) + \
@@ -416,21 +406,13 @@ def selection(population, n):
 def print_chromosome(chromosome):
     course_index = int(course_bits(chromosome), 2)
     if course_index < len(CourseClass.classes):
-        slot_bits_str = slot_bits(chromosome)
-        if slot_bits_str:
-            slot_index = int(slot_bits_str, 2)
-            print(
-                CourseClass.classes[course_index], " | ",
-                Professor.professors[int(professor_bits(chromosome), 2)], " | ",
-                Group.groups[int(group_bits(chromosome), 2)], " | ",
-                Slot.slots[slot_index], " | ",
-                Room.rooms[int(lt_bits(chromosome), 2)]
-            )
-        else:
-            print("Slot bits are empty for the chromosome")
+        print(CourseClass.classes[course_index], " | ",
+              Professor.professors[int(professor_bits(chromosome), 2)], " | ",
+              Group.groups[int(group_bits(chromosome), 2)], " | ",
+              Slot.slots[int(slot_bits(chromosome), 2)], " | ",
+              Room.rooms[int(lt_bits(chromosome), 2)])
     else:
         print("Invalid course index:", course_index)
-
 
 # Simple Searching Neighborhood
 # It randomly changes timeslot of a class/lab
