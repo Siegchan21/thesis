@@ -84,20 +84,21 @@ class Slot:
     def populate_slots(cls):
         cls.slots = []
 
-        # Define time slots
-        time_slots = [
-            "07:00-08:30", "08:30-10:00", "10:00-11:30",
-            "13:00-14:30", "14:30-16:00", "16:00-17:30"
-            # Add more time slots if needed
+        # Provided time slot data
+        slot_data = [
+            {"name": "07:00-08:30 Tue"}, {"name": "08:45-10:15 Tue"}, {"name": "10:30-12:00 Tue"},
+            {"name": "13:00-14:30 Tue"}, {"name": "14:45-16:15 Tue"}, {"name": "16:30-18:00 Tue"},
+            {"name": "07:00-08:30 Wed"}, {"name": "08:45-10:15 Wed"}, {"name": "10:30-12:00 Wed"},
+            {"name": "13:00-14:30 Wed"}, {"name": "14:45-16:15 Wed"}, {"name": "16:30-18:00 Wed"},
+            {"name": "07:00-08:30 Thu"}, {"name": "08:45-10:15 Thu"}, {"name": "10:30-12:00 Thu"},
+            {"name": "13:00-14:30 Thu"}, {"name": "14:45-16:15 Thu"}, {"name": "16:30-18:00 Thu"},
+            {"name": "07:00-08:30 Fri"}, {"name": "08:45-10:15 Fri"}, {"name": "10:30-12:00 Fri"},
+            {"name": "13:00-14:30 Fri"}, {"name": "14:45-16:15 Fri"}, {"name": "16:30-18:00 Fri"}
         ]
 
-        # Define days
-        days = ["Tue", "Wed", "Thu", "Fri"]
-
-        # Generate time slots for each day
-        for day in days:
-            for time_slot in time_slots:
-                cls.slots.append(f"{time_slot} {day}")
+        # Extract time slots from the provided data
+        for slot in slot_data:
+            cls.slots.append(slot["name"])
 
 def fetch_data_from_url(urls):
     response = requests.get(urls)
@@ -116,12 +117,15 @@ bits_needed_backup_store = {}  # to improve performance
 
 
 def bits_needed(x):
-    if isinstance(x, Iterable):  # Check if x is iterable
-        r = ceil(log2(len(x)))
-        return max(r, 1)
+    if isinstance(x, int):
+        return int(ceil(log2(x)))
     else:
-        # Handle the case where x is not iterable
-        return 1  # Return a default value or handle it based on your requirements
+        global bits_needed_backup_store
+        r = bits_needed_backup_store.get(id(x))
+        if r is None:
+            r = int(ceil(log2(len(x))))
+            bits_needed_backup_store[id(x)] = r
+        return max(r, 1)
 
 def join_cpg_pair(_cpg):
     res = []
@@ -271,27 +275,35 @@ def convert_input_to_bin():
 
 def course_bits(chromosome):
     i = 0
-    course_bits_str = chromosome[i:i + bits_needed(CourseClass.classes)]    
-    return course_bits_str
+
+    return chromosome[i:i + bits_needed(CourseClass.classes)]
 
 
 def professor_bits(chromosome):
     i = bits_needed(CourseClass.classes)
+
     return chromosome[i: i + bits_needed(Professor.professors)]
+
 
 def group_bits(chromosome):
     i = bits_needed(CourseClass.classes) + bits_needed(Professor.professors)
+
     return chromosome[i:i + bits_needed(Group.groups)]
+
 
 def slot_bits(chromosome):
     i = bits_needed(CourseClass.classes) + bits_needed(Professor.professors) + \
-        bits_needed(Group.groups) + bits_needed(Slot.slots)
+        bits_needed(Group.groups)
+
     return chromosome[i:i + bits_needed(Slot.slots)]
+
 
 def lt_bits(chromosome):
     i = bits_needed(CourseClass.classes) + bits_needed(Professor.professors) + \
         bits_needed(Group.groups) + bits_needed(Slot.slots)
+
     return chromosome[i: i + bits_needed(Room.rooms)]
+
 
 def slot_clash(a, b):
     if slot_bits(a) == slot_bits(b):
@@ -383,6 +395,7 @@ def init_population(n):
         chromosomes.append(chromosome)
     return chromosomes
 
+
 # Modified Combination of Row_reselect, Column_reselect
 def mutate(chromosome):
     # print("Before mutation: ", end="")
@@ -414,22 +427,11 @@ def selection(population, n):
 
 
 def print_chromosome(chromosome):
-    course_index = int(course_bits(chromosome), 2)
-    if course_index < len(CourseClass.classes):
-        slot_bits_str = slot_bits(chromosome)
-        if slot_bits_str:
-            slot_index = int(slot_bits_str, 2)
-            print(
-                CourseClass.classes[course_index], " | ",
-                Professor.professors[int(professor_bits(chromosome), 2)], " | ",
-                Group.groups[int(group_bits(chromosome), 2)], " | ",
-                Slot.slots[slot_index], " | ",
-                Room.rooms[int(lt_bits(chromosome), 2)]
-            )
-        else:
-            print("Slot bits are empty for the chromosome")
-    else:
-        print("Invalid course index:", course_index)
+    print(CourseClass.classes[int(course_bits(chromosome), 2)], " | ",
+          Professor.professors[int(professor_bits(chromosome), 2)], " | ",
+          Group.groups[int(group_bits(chromosome), 2)], " | ",
+          Slot.slots[int(slot_bits(chromosome), 2)], " | ",
+          Room.rooms[int(lt_bits(chromosome), 2)])
 
 
 # Simple Searching Neighborhood
@@ -467,33 +469,6 @@ def acceptance_probability(old_cost, new_cost, temperature):
     else:
         return math.exp((old_cost - new_cost) / temperature)
 
-def simulated_annealing():
-    alpha = 0.9
-    T = 1.0
-    T_min = 0.00001
-    
-    convert_input_to_bin()
-    population = init_population(1) # as simulated annealing is a single-state method
-    old_cost = cost(population[0])
-    # print("Cost of original random solution: ", old_cost)
-    # print("Original population:")
-    # print(population)
-
-    for __n in range(500):
-        new_solution = swn(population[0])
-        new_solution = ssn(population[0])
-        new_cost = cost(new_solution[0])
-        ap = acceptance_probability(old_cost, new_cost, T)
-        if ap > random.random():
-            population = new_solution
-            old_cost = new_cost
-        T = T * alpha
-    # print(population)
-    # print("Cost of altered solution: ", cost(population[0]))
-    print("\n------------- Simulated Annealing --------------\n")
-    for lec in population[0]:
-        print_chromosome(lec)
-    print("Score: ", evaluate(population[0]))
 
 def genetic_algorithm():
     generation = 0
@@ -503,7 +478,7 @@ def genetic_algorithm():
     print("\n------------- Genetic Algorithm --------------\n")
     while True:
         # if termination criteria are satisfied, stop.
-        if evaluate(max(population, key=evaluate)) == 1 or generation == 5:
+        if evaluate(max(population, key=evaluate)) == 1 or generation == 500:
             print("Generations:", generation)
             print("Best Chromosome fitness value", evaluate(max(population, key=evaluate)))
             print("Best Chromosome: ", max(population, key=evaluate))
@@ -523,7 +498,6 @@ def main():
     cpg, lts, slots, max_score = convert_input_to_bin()
     random.seed()
     genetic_algorithm()
-    simulated_annealing()
 
 if __name__ == "__main__":
     main()
