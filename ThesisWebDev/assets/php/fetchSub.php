@@ -3,7 +3,8 @@
     include('connection.php');
 
     // Fetch data from the database
-    $sql = "SELECT s.subjectName AS subject, s.subjectType AS subjectType, i.instructorName AS instructor, c.courseName AS course 
+    $sql = "SELECT s.subjectID AS subjectID, s.subjectName AS subject, 
+            s.subjectType AS subjectType, i.instructorName AS instructor, c.courseName AS course 
             FROM tblsubjects AS s 
             INNER JOIN tblinstructors AS i ON s.instructorID = i.instructorID 
             INNER JOIN tblcourses AS c ON s.courseID = c.courseID";

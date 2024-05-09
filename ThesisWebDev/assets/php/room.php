@@ -255,7 +255,7 @@ async function fetchDataAndDisplay() {
                 <td>${item.room}</td>
                 <td>${item.roomType}</td>
                 <td>
-                <button class="deleteButton" data-id="${item.subjectID}">Delete</button>
+                <button class="deleteButton" data-id="${item.roomID}" onclick="deleteRow(${item.roomID})">Delete</button>
                 </td>
             `;
             tableBody.appendChild(row);
@@ -264,7 +264,31 @@ async function fetchDataAndDisplay() {
         console.error('Error fetching data:', error);
     }
 }
-
+async function deleteRow(roomID) {
+    // Find the row with the corresponding roomID and remove it from the table
+    const button = document.querySelector(`button[data-id="${roomID}"]`);
+    // Navigate to the parent tr element
+    const row = button.closest('tr');
+    if (row) {
+        row.remove();
+        // Make an AJAX request to delete the data from the database
+        fetch('deleteroom.php', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `roomID=${roomID}`,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete data from the database');
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting data from the database:', error);
+        });
+    }
+}
 // Call the function to fetch and display data when the page loads
 window.onload = fetchDataAndDisplay;
     </script>

@@ -273,13 +273,38 @@ async function fetchDataAndDisplay() {
                 <td>${item.instructor}</td>
                 <td>${item.subjectType}</td>
                 <td>
-                <button class="deleteButton" data-id="${item.subjectID}">Delete</button>
+                <button class="deleteButton" data-id="${item.subjectID}" onclick="deleteRow(${item.subjectID})">Delete</button>
                 </td>
             `;
             tableBody.appendChild(row);
         });
     } catch (error) {
         console.error('Error fetching data:', error);
+    }
+}
+async function deleteRow(subjectID) {
+    // Find the row with the corresponding subjectID and remove it from the table
+    const button = document.querySelector(`button[data-id="${subjectID}"]`);
+    // Navigate to the parent tr element
+    const row = button.closest('tr');
+    if (row) {
+        row.remove();
+        // Make an AJAX request to delete the data from the database
+        fetch('deletesub.php', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `subjectID=${subjectID}`,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete data from the database');
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting data from the database:', error);
+        });
     }
 }
 

@@ -187,6 +187,10 @@
                 newRow.innerHTML = `
                     <td><input type="text" name="instructorName[]" placeholder="Enter instructor name"></td>
                     <td><input type="text" name="instructorRole[]" placeholder="Enter instructor role"></td>
+                    <td><select name="courseName[]">
+                                <?php include("retrieveCourse.php"); ?>
+                        </select>
+                    </td>
                     <td><button class="removeRowButton" onclick="deleteRow(this)"><i class="lni lni-trash-can"></i></button></td> <!-- Remove row button -->
                 `;
                 tableBody.appendChild(newRow);
@@ -257,4 +261,4 @@
 </script>
 
 </body>
-</html>
+</html> 

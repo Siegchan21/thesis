@@ -3,7 +3,7 @@
     include('connection.php');
 
     // Fetch data from the database
-    $sql = "SELECT s.sectionName AS section, c.courseName AS course 
+    $sql = "SELECT s.sectionID AS sectionID, s.sectionName AS section, c.courseName AS course 
             FROM tblsections AS s
             INNER JOIN tblcourses AS c ON s.courseID = c.courseID";
     $result = $conn->query($sql);

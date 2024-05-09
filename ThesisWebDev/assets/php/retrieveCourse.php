@@ -2,7 +2,7 @@
 include('connection.php');
 
 // Query to retrieve instructor names from the database
-$sql = "SELECT courseName FROM tblcourses";
+$sql = "SELECT courseID, courseName FROM tblcourses";
 
 // Execute the query
 $result = $conn->query($sql);
@@ -11,7 +11,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // Loop through each row and output instructor names as options
     while ($row = $result->fetch_assoc()) {
-        echo '<option value="' . $row['courseName'] . '">' . $row['courseName'] . '</option>';
+        echo '<option value="' . $row['courseID'] . '">' . $row['courseName'] . '</option>';
     }
 } else {
     // If no results are found, display a default option
