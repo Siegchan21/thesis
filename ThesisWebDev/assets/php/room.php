@@ -25,39 +25,33 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="/ThesisWebDev/main.html" class="sidebar-link">
+                    <a href="/Thesis Web Dev/main.html" class="sidebar-link">
                         <i class="lni lni-dashboard"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="genPage.php" class="sidebar-link">
+                    <a href="/Thesis Web Dev/Gen Page.html" class="sidebar-link">
                         <i class="lni lni-calendar"></i>
                         <span>Generate</span>
                     </a>
                 </li>
                 <li class="sidebar-item dropdown">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                    <a class="sidebar-link dropdown-toggle" href="#" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="lni lni-graph"></i>
                         <span>Schedule</span>
                     </a>
-                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item">
-                            <a href="subject.php" class="sidebar-link">Subject</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="room.php" class="sidebar-link">Room</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="faculty.php" class="sidebar-link">Faculty</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="sections.php" class="sidebar-link">Sections</a>
-                        </li>
+                    <div class="sub-menu">
+                    <ul class="sub-menu" aria-labelledby="navbarDropdown">
+                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="subject.php">Subject</a></li>
+                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="room.php">Room</a></li>
+                        <li class="sidebar-item"><a class="dropdown-item sidebar-link text-light" href="Faculty.php">Faculty</a></li>
+                        <li class="sidebar-link"><a class="dropdown-item sidebar-link text-light" href="sections.php">Sections</a></li>
                     </ul>
+                    </div>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="/ThesisWebDev/Request.html">
+                    <a class="sidebar-link" href="/Thesis Web Dev/Request.html">
                         <i class="lni lni-cog"></i>
                         <span>Request</span>
                     </a>
@@ -166,7 +160,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
-<script src="assets/js/script.js"></script> 
+<script src="assets/js/script.js"></script>
 <script>
     function navigateToPage() {
         window.location.href = "main.html"; // Replace "your-page-url.html" with the actual URL
